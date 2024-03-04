@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=M+PLUS+Rounded+1c&display=swap');
+
+* {
+  font-family: "Comfortaa", sans-serif;
+  margin: 0px;
+  padding: 0px;
+}
+
+a {
+  text-decoration: none;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  background-color: rgb(245, 245, 255);
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+  width: 80%;
+  margin: 0px auto;
+  padding-top: 10px;
+}
+
+.navbar button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 7px;
+  background-color: rgb(83, 83, 83);
+  color: white;
+}
+
+
+/* Auth */
+.auth-container {
+  background-color: rgba(0, 0, 0, .4);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+  display: flex;
+}
+
+.form-container {
+  margin: 0px auto;
+  margin-top: 200px;
+  height: 300px;
+  max-width: 500px;
+  width: 300px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 30px 50px;
+}
+
+.auth-container input {
+  border: none;
+  outline: none;
+  margin-left: 7px;
+}
+
+.auth-container .input-container {
+  margin: 0px 50px;
+  margin-top: 20px;
+}
+
+.auth-container .input-container div {
+  border: 2px solid rgb(197, 197, 197);
+  margin-top: 5px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.auth-container #submit {
+  padding: 5px;
+  border: none;
+  background-color: rgb(36, 184, 127);
+  color: white;
+  border-radius: 5px;
+  width: 50%;
+  margin-top: 15px;
+  margin-left: 74px;
+  display: inline-block;
+}
+
+.auth-container #button-change-form {
+  width: 100%;
+  font-size: 12px;
+  margin-top: 20px;
+  background-color: transparent;
+  color: blue;
+  border: none;
+}
