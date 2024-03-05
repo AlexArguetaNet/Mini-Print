@@ -23,7 +23,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 800px;
+  max-width: 1000px;
   width: 80%;
   margin: 0px auto;
   padding-top: 10px;
@@ -111,6 +111,9 @@ body {
   background-color: rgb(233, 35, 85);
 }
 
+#input-password {
+  width: 147px;
+}
 
 
 
@@ -135,6 +138,9 @@ body {
 .controls select {
   flex: 1;
   padding: 3px 5px;
+  border: 2px solid rgb(223, 223, 223);
+  outline: none;
+  border-radius: 5px;
 }
 
 .controls button {

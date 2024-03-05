@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faUser } from "@fortawesome/free-regular-svg-icons";
+import { faEnvelope, faUser, faEye } from "@fortawesome/free-regular-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import axios from "axios";
@@ -11,19 +11,18 @@ export const AuthForm = ({ showAuthForm }) => {
 
     const [switchForm, setSwitchForm] = useState(false);
 
+    // Switches between the login and sign up forms
     function handleForm(event) {
 
         event.preventDefault();
-
         switchForm ? setSwitchForm(false) : setSwitchForm(true);
 
     }
 
+    // Handles the visibility of the form
     function handleDisplay(event) {
 
-        if (event.target.id === "auth-container") {
-            showAuthForm();
-        }
+        event.target.id === "auth-container" && showAuthForm();
 
     }
 
@@ -148,6 +147,12 @@ const Form = ({ label,
     password,
     setPassword }) => {
 
+    const [inputType, setInputType] = useState("password");
+
+    function handleInputType() {
+        inputType === "password" ? setInputType("text") : setInputType("password");
+    }
+
     return (
         <div className="form-container">
             <form action="" onSubmit={() => { }}>
@@ -177,7 +182,8 @@ const Form = ({ label,
                     <label htmlFor="password">Password</label>
                     <div>
                         <FontAwesomeIcon icon={faLock} />
-                        <input name="password" type="password" value={password} onChange={event => setPassword(event.target.value)} required />
+                        <input id="input-password" name="password" type={inputType} value={password} onChange={event => setPassword(event.target.value)} required />
+                        <FontAwesomeIcon icon={faEye} onClick={handleInputType} />
                     </div>
                 </div>
 
