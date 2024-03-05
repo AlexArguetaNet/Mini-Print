@@ -4,11 +4,13 @@ import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import { useLockBodyScroll } from "@uidotdev/usehooks";
 
 
 
 export const AuthForm = ({ showAuthForm }) => {
 
+    useLockBodyScroll(); // Disables scrolling
     const [switchForm, setSwitchForm] = useState(false);
 
     // Switches between the login and sign up forms
@@ -99,7 +101,6 @@ const Login = ({ handleForm, showAuthForm }) => {
 
         event.preventDefault();
 
-        // TODO: Implement function
         axios.post("http://localhost:4001/auth/login", { email, password })
             .then(res => {
 

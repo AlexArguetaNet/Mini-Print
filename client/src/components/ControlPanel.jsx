@@ -1,14 +1,7 @@
 import { useState } from "react";
 
 
-export const ControlPanel = () => {
-
-    const [category, setCategory] = useState("Business");
-    const [searchKey, setSearchKey] = useState("");
-
-    function fetchNews() {
-
-    }
+export const ControlPanel = ({ category, setCategory, searchKey, setSearchKey, fetchNews }) => {
 
     return (
         <div className="controls">
@@ -26,7 +19,7 @@ export const ControlPanel = () => {
                 <button onClick={fetchNews}>Fetch News</button>
             </div>
             <div className="search input-container">
-                <input type="text" placeholder="Search for news..." onChange={(event) => setSearchKey(event.target.value)} />
+                <input type="text" value={searchKey} placeholder="Search for news..." onChange={(event) => setSearchKey(event.target.value)} />
                 <button onClick={fetchNews}>Search</button>
             </div>
         </div>
