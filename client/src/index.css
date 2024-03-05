@@ -15,7 +15,7 @@ html {
 }
 
 body {
-  background-color: rgb(245, 245, 255);
+  background-color: rgb(238, 238, 255);
 }
 
 /* Navbar */
@@ -101,4 +101,52 @@ body {
   background-color: transparent;
   color: blue;
   border: none;
+}
+
+#button-login {
+  background-color: rgb(26, 184, 118);
+}
+
+#button-logout {
+  background-color: rgb(233, 35, 85);
+}
+
+
+
+
+
+/* Controls */
+.controls {
+  background-color: white;
+  max-width: 550px;
+  margin: 50px auto;
+  padding: 30px 60px;
+  border-radius: 5px;
+}
+
+.controls .input-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.controls input,
+.controls select {
+  flex: 1;
+  padding: 3px 5px;
+}
+
+.controls button {
+  padding: 5px;
+  width: 100px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(56, 56, 56);
+  color: white;
+}
+
+.controls label {
+  margin-right: 5px;
 }

@@ -16,9 +16,9 @@ export const Navbar = ({ showAuthForm }) => {
             <h2>Mini Print <FontAwesomeIcon icon={faNewspaper} /></h2>
             {
                 !cookies.access_token ?
-                    <button onClick={showAuthForm}>Login</button>
+                    <button onClick={showAuthForm} id="button-login">Login</button>
                     :
-                    <button onClick={logout}>Logout</button>        
+                    <button onClick={logout} id="button-logout">Logout</button>
             }
 
         </div>

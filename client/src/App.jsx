@@ -16,7 +16,7 @@ function App() {
           showAuthForm && <AuthForm showAuthForm={() => setShowAuthForm(false)} />
         }
         <Navbar showAuthForm={() => setShowAuthForm(true)} />
-        {/* <ControlPanel /> */}
+        <ControlPanel />
 
       </div>
     </>
