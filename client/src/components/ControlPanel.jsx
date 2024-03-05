@@ -16,11 +16,11 @@ export const ControlPanel = ({ category, setCategory, searchKey, setSearchKey, f
                     <option value="sports">Sports</option>
                     <option value="technology">Technology</option>
                 </select>
-                <button onClick={fetchNews}>Fetch News</button>
+                <button onClick={() => fetchNews(true)}>Fetch News</button>
             </div>
             <div className="search input-container">
                 <input type="text" value={searchKey} placeholder="Search for news..." onChange={(event) => setSearchKey(event.target.value)} />
-                <button onClick={fetchNews}>Search</button>
+                <button onClick={() => fetchNews(false)}>Search</button>
             </div>
         </div>
     );
