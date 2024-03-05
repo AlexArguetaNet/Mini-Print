@@ -4,20 +4,21 @@ import { useCookies } from "react-cookie";
 
 export const Navbar = ({ showAuthForm }) => {
 
-    const [cookies, removeCookie] = useCookies(["access_token"]);
+    const [cookies, setCookies] = useCookies(["access_token"]);
 
     function logout() {
-        removeCookie("access_token");
+        setCookies("access_token", "");
+        window.localStorage.removeItem("userId");
     }
 
     return (
         <div className="navbar">
             <h2>Mini Print <FontAwesomeIcon icon={faNewspaper} /></h2>
             {
-                cookies.access_token ?
-                    <button onClick={logout}>Logout</button>
-                    :
+                !cookies.access_token ?
                     <button onClick={showAuthForm}>Login</button>
+                    :
+                    <button onClick={logout}>Logout</button>        
             }
 
         </div>
