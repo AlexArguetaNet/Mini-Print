@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useLockBodyScroll } from "@uidotdev/usehooks";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -96,11 +97,13 @@ const Login = ({ handleForm, showAuthForm }) => {
     const [password, setPassword] = useState("");
     const [_, setCookies] = useCookies(["access_token"]);
     const buttonStr = "Don't have an account? Sign up!"
+    const navigate = useNavigate();
 
     function loginHandler(event) {
 
         event.preventDefault();
 
+        // Send API call to the Express server to process the login request
         axios.post("http://localhost:4001/auth/login", { email, password })
             .then(res => {
 
@@ -112,8 +115,8 @@ const Login = ({ handleForm, showAuthForm }) => {
 
                     setCookies("access_token", res.data.token);
                     window.localStorage.setItem("userId", res.data.userId);
-
                     showAuthForm();
+                    navigate(`/users/${res.data.userId}`);
 
                 }
 

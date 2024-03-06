@@ -18,6 +18,10 @@ body {
   background-color: rgb(238, 238, 255);
 }
 
+button {
+  cursor: pointer;
+}
+
 /* Navbar */
 .navbar {
   display: flex;
@@ -157,6 +161,12 @@ body {
 .controls label {
   margin-right: 5px;
 }
+
+
+
+
+
+
 
 /* Article */
 .article-list {
