@@ -1,0 +1,26 @@
+
+.navbar {
+    max-width: 900px;
+    width: 80%;
+    margin: 0px auto;
+}
+
+.navbar .links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 4px;
+}
+
+.navbar button {
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+    width: 60px;
+}
+
+#button-login {
+    background-color: rgb(69, 185, 150);
+}
