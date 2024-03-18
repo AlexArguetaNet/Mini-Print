@@ -10,6 +10,10 @@ export const signUp = async (req: Request, res: Response): Promise<Response<any,
 
     try {
 
+        if (username === "" || email === "" || password === "") {
+            return res.json({ error: "Empty input", msg: "Please fill out the entire form" });
+        }
+
         // Check if username is available
         const usernameResult = await UserModel.findOne({ username });
         if (usernameResult) return res.json({ error: "Sign up error", msg: "Username unavailable" });
@@ -40,6 +44,10 @@ export const login = async (req: Request, res: Response): Promise<Response<any, 
     const { email, password } = req.body;
 
     try {
+
+        if (email === "" || password === "") {
+            return res.json({ error: "Empty input", msg: "Please enter an email and password"});
+        }
 
         // Validate email
         const user = await UserModel.findOne({ email });

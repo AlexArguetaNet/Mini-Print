@@ -2,6 +2,8 @@ import { useState } from "react";
 import "../styles/AuthForm.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faEnvelope, faLock, faX } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import { useCookies } from "react-cookie";
 
 export const Auth = (props: { closeAuthForm: () => void }) => {
 
@@ -35,10 +37,29 @@ const SignUp = (props: { switchForm: () => void, close: () => void }) => {
 
     function onSubmit(event: React.FormEvent<HTMLFormElement>) {
 
-        // TODO: Implement this function
-
         // Prevent default submit action
         event.preventDefault();
+
+        axios.post("http://localhost:4002/auth/sign-up", { username, email, password })
+        .then(res => {
+
+            if (res.data.error) {
+                setUsername("");
+                setEmail("");
+                setPassword("");
+                return alert(res.data.msg);
+            }
+
+            props.switchForm();
+            return alert("New account created!");
+
+        })
+        .catch(err => {
+            alert("Error");
+            console.log(err);
+        });
+
+
 
     }
 
@@ -63,10 +84,27 @@ const Login = (props: { switchForm: () => void, close: () => void }) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [_, setCookies] = useCookies(["access_token"]);
 
     function onSubmit(event: React.FormEvent<HTMLFormElement>) {
 
-        // TODO: Implement this function
+        axios.post("http://localhost:4002/auth/login", { email, password })
+        .then(res => {
+
+            if (res.data.error) {
+                return alert(res.data.msg);
+            }
+
+            // Store user id in browser's local storage
+            window.localStorage.setItem("userId", res.data.userId);
+            setCookies("access_token", res.data.token);
+            props.close();
+
+        })
+        .catch(err => {
+            alert("Error");
+            console.log(err);
+        });
 
 
         // Prevent default submit action
