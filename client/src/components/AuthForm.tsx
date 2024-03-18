@@ -1,23 +1,44 @@
 import { useState } from "react";
 import "../styles/AuthForm.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faEnvelope, faLock, faX } from "@fortawesome/free-solid-svg-icons";
 
-export const Auth = () => {
+export const Auth = (props: { closeAuthForm: () => void }) => {
+
+    const [switchForm, setSwitchForm] = useState(true);
+
+    function closeForm(event: React.MouseEvent<HTMLDivElement>) {
+
+        // Cast event object to instance of HTMLInputElement to access id field
+        let elementId = (event.target as HTMLInputElement).id;
+
+        if (elementId === "auth") {
+            props.closeAuthForm();
+        }
+    }
 
     return (
-        <div className="auth">
-            <SignUp/>
+        <div className="auth" id="auth" onClick={event => closeForm(event)}>
+            {switchForm ? <Login switchForm={() => setSwitchForm(false)} close={() => props.closeAuthForm()}/> 
+            : 
+            <SignUp switchForm={() => setSwitchForm(true)} close={() => props.closeAuthForm()}/>}
         </div>
     );
 }
 
 
-const SignUp = () => {
+const SignUp = (props: { switchForm: () => void, close: () => void }) => {
 
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+
+        // TODO: Implement this function
+
+        // Prevent default submit action
+        event.preventDefault();
 
     }
 
@@ -31,23 +52,55 @@ const SignUp = () => {
             setEmail={setEmail}
             setPassword={setPassword}
             label="Sign Up"
+            buttonLabel="Already have an account? Login!"
+            switchForm={props.switchForm}
+            close={props.close}
         />
     )
 }
 
-const Login = () => {
+const Login = (props: { switchForm: () => void, close: () => void }) => {
 
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+
+        // TODO: Implement this function
+
+
+        // Prevent default submit action
+        event.preventDefault();
+
+    }
+
+    return (
+        <Form 
+            onSubmit={onSubmit} 
+            email={email} 
+            password={password}
+            setEmail={setEmail}
+            setPassword={setPassword}
+            label="Login"
+            buttonLabel="Don't have an account? Sign up!"
+            switchForm={props.switchForm}
+            close={props.close}
+        />
+    )
 }
 
 const Form = (props: { 
     onSubmit: (event: React.FormEvent<HTMLFormElement>) => void,
-    username: string,
-    setUsername: React.Dispatch<React.SetStateAction<string>>,
+    username?: string,
+    setUsername?: React.Dispatch<React.SetStateAction<string>>,
     email: string,
     setEmail: React.Dispatch<React.SetStateAction<string>>,
     password: string,
     setPassword: React.Dispatch<React.SetStateAction<string>>, 
     label: string,
+    buttonLabel: string,
+    switchForm: () => void,
+    close: () => void
 }) => {
 
     const { 
@@ -58,27 +111,48 @@ const Form = (props: {
         setEmail,
         password,
         setPassword,
-        label 
+        label,
+        buttonLabel,
+        switchForm,
+        close
     
         } = props;
 
     return (
         <div className="auth-form">
+            <FontAwesomeIcon icon={faX} id="auth-x" onClick={close}/>
+            <h2>{label}</h2>
             <form action="" onSubmit={event => onSubmit(event)}>
-                <div className="username auth-input">
-                    <label htmlFor="username">Username</label>
-                    <input type="text" name="username" value={username} required/>
-                </div>
+                
+                { setUsername != undefined && (
+                    <div className="username auth-input">
+                        <label htmlFor="username">Username</label>
+                        <div>
+                            <FontAwesomeIcon icon={faUser}/>
+                            <input type="text" name="username" value={username} onChange={event => setUsername(event.target.value)} required/>
+                        </div>
+                    </div>
+                )}
+
                 <div className="email auth-input">
                     <label htmlFor="email">Email</label>
-                    <input type="text" name="email" value={email} required/>
+                    <div>
+                        <FontAwesomeIcon icon={faEnvelope}/>
+                        <input type="text" name="email" value={email} onChange={event => setEmail(event.target.value)} required/>
+                    </div>
                 </div>
                 <div className="password auth-input">
                     <label htmlFor="password">Password</label>
-                    <input type="password" name="password" value={password} required/>
+                    <div>
+                        <FontAwesomeIcon icon={faLock}/>
+                        <input type="password" name="password" value={password} onChange={event => setPassword(event.target.value)} required/>
+                    </div>
                 </div>
-                <button>Submit</button>
+                <div className="form-buttons">
+                    <button id="submit">Submit</button>
+                </div>
             </form>
+            <button id="switch" onClick={switchForm}>{buttonLabel}</button>
         </div>
     );
 }

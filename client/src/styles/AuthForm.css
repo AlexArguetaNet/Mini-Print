@@ -1,8 +1,82 @@
 
+.auth, .auth-form {
+    display: flex;
+}
+
 .auth {
     z-index: 9;
     position: absolute;
-    background-color: rgba(0, 0, 0, .5);
+    background-color: rgba(0, 0, 0, .3);
     width: 100%;
     height: 100%;
+    justify-content: center;
+}
+
+.auth-form {
+    margin-top: 120px;
+    height: fit-content;
+    background-color: white;
+    flex-direction: column;
+    padding: 20px 60px;
+    box-shadow: rgba(100, 100, 111, 0.5) 0px 7px 29px 0px;
+    border-radius: 5px;
+    position: relative;
+    padding-top: 30px;
+}
+
+.auth-form h2 {
+    margin-bottom: 10px;
+}
+
+.auth input {
+    margin-left: 10px;
+    border: none;
+    outline: none;
+}
+
+.auth-input {
+    margin-top: 15px;
+}
+
+.auth-input div {
+    border: 2px solid rgb(194, 194, 194);
+    border-radius: 5px;
+    padding: 3px 4px;
+    margin-top: 3px;
+}
+
+.form-buttons {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.auth #submit {
+    border: none;
+    padding: 3px 0px;
+    border-radius: 5px;
+    width: 150px;
+    background-color: rgb(69, 185, 150);
+    color: white;
+}
+
+.auth #switch {
+    margin-top: 20px;
+    width: 200px;
+    background: transparent;
+    color: blue;
+    border: none;
+}
+
+.auth svg {
+    color: gray;
+}
+
+
+.auth #auth-x {
+    cursor: pointer;
+    position: absolute;
+    right: 15px;
+    top: 7px;
 }
