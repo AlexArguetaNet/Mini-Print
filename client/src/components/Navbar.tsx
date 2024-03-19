@@ -6,10 +6,10 @@ import { useNavigate } from "react-router-dom";
 
 export const Navbar = (props: { openAuthForm: () => void}) => {
 
-    const [cookies, setCookies, removeCookies] = useCookies(["access_token"]);
+    const [cookies, _, removeCookies] = useCookies(["access_token"]);
     const navigate = useNavigate();
 
-    function logout() {
+    function logout(): void {
         window.localStorage.removeItem("userId");
         removeCookies("access_token");
         navigate("/");

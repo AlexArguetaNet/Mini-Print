@@ -92,6 +92,8 @@ const Login = (props: { switchForm: () => void, close: () => void }) => {
         .then(res => {
 
             if (res.data.error) {
+                setEmail("");
+                setPassword("");
                 return alert(res.data.msg);
             }
 
