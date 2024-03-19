@@ -5,14 +5,12 @@ import axios from "axios";
 
 export const Home = () => {
 
-    const [articles, setArticles] = useState([]);
-    const [searchQuery, setSearchQuery] = useState("general");
-    
+    const [articles, setArticles] = useState([]);    
 
     // Fetches news data. 
-    function fetchNews(searchBy: string): void {
+    function fetchNews(searchBy: string, query: string): void {
 
-        let url = `http://localhost:4002/news/?${ searchBy }=${ searchQuery }`;
+        let url = `http://localhost:4002/news/?${ searchBy }=${ query }`;
 
         axios.get(url)
         .then(res => {
@@ -37,14 +35,14 @@ export const Home = () => {
 
     // Fetch news on first render
     useEffect(() => {
-        fetchNews("category");
+        fetchNews("category", "general");
     }, []);
 
 
 
     return (
         <div className="home page">
-            <Controls/>
+            <Controls fetchNews={fetchNews} />
             { articles.length != 0 && <ArticleList articles={articles} />}
         </div>
     );

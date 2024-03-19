@@ -1,12 +1,40 @@
 import "../styles/Controls.css"
+import { useState } from "react";
 
-export const Controls = () => {
+export const Controls = (props: { fetchNews: (searchBy: string, query: string) => void }) => {
+
+    const [category, setCategory] = useState("Select a category");
+    const [searchQuery, setSearchQuery] = useState("");
+    const { fetchNews } = props;
+
+    // Fetch news by category
+    function fetchByCategory() {
+
+        if (category === "null" ) {
+            return alert("Please select a category or enter a search key");
+        }
+
+        setSearchQuery("");
+        fetchNews("category", category)
+    }
+
+    // Fetch news by search query
+    function fetchBySearchQuery() {
+
+        if (searchQuery === "") {
+            return alert("Please enter a search key or choose a category");
+        }
+
+        setCategory("Select a category");
+        fetchNews("searchKey", searchQuery);
+    }
 
     return (
         <div className="controls">
             <div className="category control-input">
                 <label htmlFor="category">Category</label>
-                <select name="category" id="">
+                <select name="category" value={category} onChange={(event) => setCategory(event.target.value)}>
+                    <option value="null">Select a category</option>
                     <option value="general">General</option>
                     <option value="business">Business</option>
                     <option value="technology">Technology</option>
@@ -15,12 +43,16 @@ export const Controls = () => {
                     <option value="science">Science</option>
                     <option value="sports">Sports</option>
                 </select>
-                <button>Fetch News</button>
+                <button onClick={fetchByCategory}>Fetch News</button>
             </div>
             <div className="search control-input">
                 <label htmlFor="searchKey">Search</label>
-                <input type="text" name="searchKey" placeholder="Search for news..."/>
-                <button>Search</button>
+                <input type="text" name="searchKey" 
+                    onChange={(event) => setSearchQuery(event.target.value)} 
+                    value={searchQuery} 
+                    placeholder="Search for news..."
+                />
+                <button onClick={fetchBySearchQuery}>Search</button>
             </div>
         </div>
     );

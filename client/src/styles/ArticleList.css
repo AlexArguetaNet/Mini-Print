@@ -33,4 +33,11 @@
     position: absolute;
     right: 15px;
     top: 160px;
+    border: none;
+    padding: 4px;
+    background-color: rgb(78, 78, 78);
+    color: white;
+}
+.article button:hover {
+    background-color: rgb(84, 192, 156);
 }
