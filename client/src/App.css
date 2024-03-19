@@ -1,4 +1,6 @@
 
-body {
-  background-color: rgb(240, 240, 255);
+
+body, html {
+    background-color: rgb(240, 240, 255);
+    height: 100%;
 }

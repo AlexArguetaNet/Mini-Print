@@ -164,6 +164,7 @@ const Form = (props: {
             <h2>{label}</h2>
             <form action="" onSubmit={event => onSubmit(event)}>
                 
+                {/* Show username text field if the form is to sign up */}
                 { setUsername != undefined && (
                     <div className="username auth-input">
                         <label htmlFor="username">Username</label>
@@ -178,7 +179,7 @@ const Form = (props: {
                     <label htmlFor="email">Email</label>
                     <div>
                         <FontAwesomeIcon icon={faEnvelope}/>
-                        <input type="text" name="email" value={email} onChange={event => setEmail(event.target.value)} required/>
+                        <input type="email" name="email" value={email} onChange={event => setEmail(event.target.value)} required/>
                     </div>
                 </div>
                 <div className="password auth-input">
