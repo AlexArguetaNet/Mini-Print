@@ -2,13 +2,34 @@ import "../styles/ArticleList.css";
 import { useCookies } from "react-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
-export const ArticleList = (props: { articles: object[] }) => {
+export const ArticleList = (props: { articles: any[] }) => {
 
     const { articles } = props;
 
     function selectArticle(index: number): void {
-        console.log(articles[index]);
+
+        let newArticle = {
+            author: articles[index].author,
+            title: articles[index].title,
+            description: articles[index].description,
+            urlToImage: articles[index].urlToImage,
+            url: articles[index].url,
+            userId: window.localStorage.getItem("userId")
+        }
+
+
+        axios.post("http://localhost:4002/add-article", { article: newArticle })
+        .then(res => {
+
+            
+
+        })
+        .catch(err => {
+
+        })
+
     }
 
     return (

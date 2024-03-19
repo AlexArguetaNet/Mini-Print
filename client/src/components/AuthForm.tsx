@@ -5,7 +5,6 @@ import { faUser, faEnvelope, faLock, faX } from "@fortawesome/free-solid-svg-ico
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useLockBodyScroll } from "@uidotdev/usehooks";
-import { useNavigate } from "react-router-dom";
 
 export const Auth = (props: { closeAuthForm: () => void }) => {
 
@@ -88,7 +87,6 @@ const Login = (props: { switchForm: () => void, close: () => void }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [_, setCookies] = useCookies(["access_token"]);
-    const navigate = useNavigate();
 
     function onSubmit(event: React.FormEvent<HTMLFormElement>) {
 
@@ -105,7 +103,6 @@ const Login = (props: { switchForm: () => void, close: () => void }) => {
             window.localStorage.setItem("userId", res.data.userId);
             setCookies("access_token", res.data.token);
             props.close();
-            navigate(`/user/${ res.data.userId }`);
 
         })
         .catch(err => {

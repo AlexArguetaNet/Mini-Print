@@ -4,6 +4,7 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import { authRouter } from "./routes/auth";
 import { newsRouter } from "./routes/news";
+import { userRouter } from "./routes/user";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use("/auth", authRouter);
 app.use("/news", newsRouter);
+app.use("/", userRouter);
 
 mongoose.connect(process.env.MONGO_URI || "")
 .then(() => {
