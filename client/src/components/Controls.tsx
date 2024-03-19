@@ -3,15 +3,17 @@ import { useState } from "react";
 
 export const Controls = (props: { fetchNews: (searchBy: string, query: string) => void }) => {
 
-    const [category, setCategory] = useState("Select a category");
+    const [category, setCategory] = useState("null");
     const [searchQuery, setSearchQuery] = useState("");
     const { fetchNews } = props;
 
     // Fetch news by category
     function fetchByCategory() {
 
+        console.log(category);
+
         if (category === "null" ) {
-            return alert("Please select a category or enter a search key");
+            return alert("Please select a category");
         }
 
         setSearchQuery("");
@@ -25,7 +27,7 @@ export const Controls = (props: { fetchNews: (searchBy: string, query: string) =
             return alert("Please enter a search key or choose a category");
         }
 
-        setCategory("Select a category");
+        setCategory("null");
         fetchNews("searchKey", searchQuery);
     }
 

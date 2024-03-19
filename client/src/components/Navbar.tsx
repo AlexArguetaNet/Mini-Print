@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faNewspaper } from "@fortawesome/free-solid-svg-icons";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const Navbar = (props: { openAuthForm: () => void}) => {
 
@@ -20,10 +21,14 @@ export const Navbar = (props: { openAuthForm: () => void}) => {
             <div className="links">
                 <h2>Mini Print <FontAwesomeIcon icon={faNewspaper}/></h2>
                 <div>
-                    { !cookies.access_token ? 
-                        <button id="button-login" onClick={() => props.openAuthForm()}>Login</button>
+                    { cookies.access_token ? 
+                        <>
+                            <Link to="/">Home</Link>
+                            <Link to={`/user/${ window.localStorage.getItem("userId")}`}>My News</Link>
+                            <button id="button-logout" onClick={logout}>Logout</button>
+                        </> 
                         :
-                        <button id="button-logout" onClick={logout}>Logout</button>
+                        <button id="button-login" onClick={() => props.openAuthForm()}>Login</button>
                     }
                 </div>
             </div>

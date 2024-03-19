@@ -28,3 +28,7 @@
 #button-logout {
     background-color: rgb(231, 53, 97);
 }
+
+.navbar a {
+    margin: 0px 15px;
+}

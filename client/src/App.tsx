@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useState } from 'react'
 import { Home } from './pages/Home'
+import { UserHome } from './pages/UserHome'
 import { Navbar } from './components/Navbar'
 import { Auth } from './components/AuthForm'
 import './App.css'
@@ -17,7 +18,8 @@ function App() {
       <Navbar openAuthForm={() => setShowAuthForm(true)} />
       
       <Routes>
-        <Route path="/" element={<Home/>}/>
+        <Route path="/" element={<Home/>} />
+        <Route path="/user/:id" element={<UserHome/>} />
       </Routes>
       </BrowserRouter>
     </div>
