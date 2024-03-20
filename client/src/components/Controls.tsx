@@ -10,8 +10,6 @@ export const Controls = (props: { fetchNews: (searchBy: string, query: string) =
     // Fetch news by category
     function fetchByCategory() {
 
-        console.log(category);
-
         if (category === "null" ) {
             return alert("Please select a category");
         }

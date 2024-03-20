@@ -30,6 +30,7 @@ export const Home = () => {
 
             setIsLoading(false);
 
+
         })
         .catch(err => {
             console.log(err);

@@ -3,6 +3,7 @@ import { useCookies } from "react-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus, faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { useState } from "react";
 
 export const ArticleList = (props: { articles: any[] }) => {
 
@@ -11,7 +12,7 @@ export const ArticleList = (props: { articles: any[] }) => {
     function selectArticle(index: number): void {
 
         let newArticle = {
-            author: articles[index].author,
+            author: articles[index].author || " ",
             title: articles[index].title,
             description: articles[index].description,
             urlToImage: articles[index].urlToImage,
@@ -51,7 +52,39 @@ const Article = (props: {
 }) => {
 
     const { article, index, selectArticle } = props;
+    const [isSaved, setIsSaved] = useState(false);
     const [cookies] = useCookies(["access_token"]);
+
+
+    // Handle UI and call function to add article to the user's list
+    function handleAddArticle() {
+        console.log("handleClick()");
+        setIsSaved(true);
+        selectArticle(index);
+    }
+
+    // Edit the article settings
+    function handleEditArticle() {
+        console.log("editArticle()");
+    }
+
+
+    // Check if the article is saved in the user's list. Then render the correct controls
+    function renderArticleButton(): JSX.Element {
+
+        if (cookies.access_token) {
+
+            if (!article.isSaved && isSaved == false && !article.userId) {
+                return <FontAwesomeIcon icon={faCirclePlus} onClick={() => handleAddArticle()}/>
+            } else {
+                return <FontAwesomeIcon icon={faEllipsisVertical} onClick={() => handleEditArticle()}/>
+            }
+
+        } else {
+            return <></>
+        }
+
+    }
 
     return (
         <div className="article">
@@ -60,12 +93,7 @@ const Article = (props: {
                 <h4>{ article.title }</h4>
                 <p>{ article.description }</p>
                 <button id="read-more" onClick={() => window.open(article.url, "_blank")?.focus()}>Read More</button>
-                { ((cookies.access_token && !article.isSaved) && !article.userId) ? 
-                    <FontAwesomeIcon onClick={() => selectArticle(index)} icon={faCirclePlus}/>
-                    : cookies.access_token || article.userId ? <FontAwesomeIcon icon={faEllipsisVertical} />
-                    : <></>
-                    
-                }
+                {renderArticleButton()}
             </div>
         </div>
     );
