@@ -1,7 +1,7 @@
 import "../styles/ArticleList.css";
 import { useCookies } from "react-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlus, faEllipsisV, faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
+import { faCirclePlus, faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 export const ArticleList = (props: { articles: any[] }) => {
