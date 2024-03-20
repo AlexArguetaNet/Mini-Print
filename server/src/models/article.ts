@@ -6,7 +6,7 @@ const articleSchema = new mongoose.Schema({
     description: { type: String, required: true },
     urlToImage: { type: String, required: true },
     url: { type: String, required: true },
-    userId: { type: String, required: true }
+    userId: { type: String, required: true },
 }, { timestamps: true });
 
 export const ArticleModel = mongoose.model("articles", articleSchema);

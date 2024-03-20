@@ -16,18 +16,21 @@ export const ArticleList = (props: { articles: any[] }) => {
             description: articles[index].description,
             urlToImage: articles[index].urlToImage,
             url: articles[index].url,
-            userId: window.localStorage.getItem("userId")
+            userId: window.localStorage.getItem("userId"),
+            inCollection: true
         }
 
 
         axios.post("http://localhost:4002/add-article", { article: newArticle })
         .then(res => {
 
-            
+            if (res.data.error) {
+                return alert(res.data.msg);
+            }
 
         })
         .catch(err => {
-
+            return alert(err);
         })
 
     }

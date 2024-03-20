@@ -7,12 +7,12 @@ import { Link } from "react-router-dom";
 
 export const Navbar = (props: { openAuthForm: () => void}) => {
 
-    const [cookies, _, removeCookies] = useCookies(["access_token"]);
+    const [cookies, setCookies] = useCookies(["access_token"]);
     const navigate = useNavigate();
 
     function logout(): void {
         window.localStorage.removeItem("userId");
-        removeCookies("access_token");
+        setCookies("access_token", "");
         navigate("/");
     }
 
@@ -21,11 +21,11 @@ export const Navbar = (props: { openAuthForm: () => void}) => {
             <div className="links">
                 <h2>Mini Print <FontAwesomeIcon icon={faNewspaper}/></h2>
                 <div>
-                    { cookies.access_token ? 
+                    { cookies.access_token != "" ? 
                         <>
                             <Link to="/">Home</Link>
                             <Link to={`/user/${ window.localStorage.getItem("userId")}`}>My News</Link>
-                            <button id="button-logout" onClick={logout}>Logout</button>
+                            <button id="button-logout" onClick={() => logout()}>Logout</button>
                         </> 
                         :
                         <button id="button-login" onClick={() => props.openAuthForm()}>Login</button>

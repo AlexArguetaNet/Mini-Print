@@ -1,0 +1,9 @@
+
+.user-search {
+    background-color: white;
+    width: 450px;
+    padding: 20px;
+    margin: 40px auto;
+    display: flex;
+    justify-content: space-between;
+}
