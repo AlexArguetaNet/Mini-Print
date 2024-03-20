@@ -16,6 +16,8 @@ export const UserHome = () => {
                 return alert(res.data.msg);
             }
 
+            console.log(res.data.articles);
+
             return setArticles(res.data.articles);
 
         })

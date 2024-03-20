@@ -1,7 +1,7 @@
 import "../styles/ArticleList.css";
 import { useCookies } from "react-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import { faCirclePlus, faEllipsisV, faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 export const ArticleList = (props: { articles: any[] }) => {
@@ -17,7 +17,7 @@ export const ArticleList = (props: { articles: any[] }) => {
             urlToImage: articles[index].urlToImage,
             url: articles[index].url,
             userId: window.localStorage.getItem("userId"),
-            inCollection: true
+            isSaved: true
         }
 
 
@@ -60,8 +60,11 @@ const Article = (props: {
                 <h4>{ article.title }</h4>
                 <p>{ article.description }</p>
                 <button id="read-more" onClick={() => window.open(article.url, "_blank")?.focus()}>Read More</button>
-                { cookies.access_token && 
+                { ((cookies.access_token && !article.isSaved) && !article.userId) ? 
                     <FontAwesomeIcon onClick={() => selectArticle(index)} icon={faCirclePlus}/>
+                    : cookies.access_token || article.userId ? <FontAwesomeIcon icon={faEllipsisVertical} />
+                    : <></>
+                    
                 }
             </div>
         </div>

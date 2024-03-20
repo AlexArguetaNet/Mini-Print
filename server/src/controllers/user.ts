@@ -37,8 +37,9 @@ export const getUserArticles = async (req: Request, res: Response): Promise<Resp
     try {
 
         const userArticles = await ArticleModel.find({ userId }).sort('-date');
+        let articles = userArticles.reverse();
 
-        return res.json({ articles: userArticles });
+        return res.json({ articles });
 
     } catch(err) {
         console.log(err);

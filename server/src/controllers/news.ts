@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import axios from "axios";
+import { ArticleModel } from "../models/article";
 
 export const fetchNews = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
 
-    const { category, searchKey } = req.query;
+    const { category, searchKey, userId } = req.query;
 
     try {
 
@@ -16,8 +17,21 @@ export const fetchNews = async (req: Request, res: Response): Promise<Response<a
         }
 
         const newsResponse = await axios.get(url);
+        const articles = newsResponse.data.articles;
+
+        // Check each article to determine if it was saved by the user
+        if (userId != "null") {
+            
+            for (const elem of articles) {
+                let isSaved = await ArticleModel.findOne({ userId, title: elem.title });
+                if (isSaved) {
+                    elem.isSaved = true;
+                }
+            }
+            
+        }
         
-        return res.json({ articles: newsResponse.data.articles });
+        return res.json({ articles });
 
     } catch(err) {
         console.log(err);
