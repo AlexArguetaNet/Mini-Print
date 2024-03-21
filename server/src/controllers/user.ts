@@ -52,11 +52,18 @@ export const getUserArticles = async (req: Request, res: Response): Promise<Resp
 export const deleteArticle = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
 
     // TODO: Implement function
-    const { _id } = req.query;
+    const { _id, url } = req.query;
 
     try {
 
-        const result = await ArticleModel.deleteOne({ _id });
+        let result;
+
+        if (_id) {
+            result = await ArticleModel.deleteOne({ _id });
+        } else {
+            result = await ArticleModel.deleteOne({ url });
+        }
+
         if (!result) return res.json({ error: "Delete error", msg: "Delete error" });
 
         return res.json({ msg: "Article deleted" });

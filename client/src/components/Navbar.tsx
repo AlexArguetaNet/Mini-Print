@@ -16,8 +16,6 @@ export const Navbar = (props: { openAuthForm: () => void}) => {
         navigate("/");
     }
 
-    console.log(cookies.access_token);
-
     return (
         <div className="navbar">
             <div className="links">
