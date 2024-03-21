@@ -47,3 +47,23 @@ export const getUserArticles = async (req: Request, res: Response): Promise<Resp
     }
 
 }
+
+// DELETE: Delete article
+export const deleteArticle = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
+
+    // TODO: Implement function
+    const { _id } = req.query;
+
+    try {
+
+        const result = await ArticleModel.deleteOne({ _id });
+        if (!result) return res.json({ error: "Delete error", msg: "Delete error" });
+
+        return res.json({ msg: "Article deleted" });
+
+    } catch(err) {
+        console.log(err);
+        return res.json({ error: "Delete error", msg: "There was an error while trying to delete the article"});
+    }
+
+}

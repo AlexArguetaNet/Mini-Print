@@ -53,8 +53,8 @@ const Article = (props: {
 
     const { article, index, selectArticle } = props;
     const [isSaved, setIsSaved] = useState(false);
+    const [isDeleted, setIsDeleted] = useState(false);
     const [cookies] = useCookies(["access_token"]);
-
 
     // Handle UI and call function to add article to the user's list
     function handleAddArticle() {
@@ -65,7 +65,19 @@ const Article = (props: {
 
     // Edit the article settings
     function handleEditArticle() {
-        console.log(article);
+        
+        axios.delete(`http://localhost:4002/delete/?_id=${ article._id }`)
+        .then(res => {
+
+            if (res.data.error) return alert(res.data.msg);
+            setIsDeleted(true);
+
+        })
+        .catch(err => {
+            console.log(err);
+            return alert(err);
+        })
+
     }
 
 
@@ -96,15 +108,19 @@ const Article = (props: {
     }
 
     return (
-        <div className="article">
-            <img src={article.urlToImage} alt="image" />
-            <div>
-                <h4>{ article.title }</h4>
-                <p>{ article.description }</p>
-                <button id="read-more" onClick={() => window.open(article.url, "_blank")?.focus()}>Read More</button>
-                {renderArticleButton()}
+        <>
+            { !isDeleted && (
+                <div className="article">
+                <img src={article.urlToImage} alt="image" />
+                <div>
+                    <h4>{ article.title }</h4>
+                    <p>{ article.description }</p>
+                    <button id="read-more" onClick={() => window.open(article.url, "_blank")?.focus()}>Read More</button>
+                    {renderArticleButton()}
+                </div>
             </div>
-        </div>
+            )}
+        </>
     );
 
 }
