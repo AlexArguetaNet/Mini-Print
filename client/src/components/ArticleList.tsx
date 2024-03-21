@@ -1,7 +1,7 @@
 import "../styles/ArticleList.css";
 import { useCookies } from "react-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlus, faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
+import { faCirclePlus, faEllipsis, faTrash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { useState } from "react";
 
@@ -65,7 +65,7 @@ const Article = (props: {
 
     // Edit the article settings
     function handleEditArticle() {
-        console.log("editArticle()");
+        console.log(article);
     }
 
 
@@ -75,9 +75,18 @@ const Article = (props: {
         if (cookies.access_token) {
 
             if (!article.isSaved && isSaved == false && !article.userId) {
-                return <FontAwesomeIcon icon={faCirclePlus} onClick={() => handleAddArticle()}/>
+                return <div className="article-icon">
+                        <FontAwesomeIcon id="icon-plus" icon={faCirclePlus} onClick={() => handleAddArticle()}/>
+                       </div>
             } else {
-                return <FontAwesomeIcon icon={faEllipsisVertical} onClick={() => handleEditArticle()}/>
+                return <div className="article-icon">
+                        <FontAwesomeIcon id="icon-ellipses" icon={faEllipsis} />
+                        <div className="article-drop-down">
+                            <div className="remove-article" onClick={() => handleEditArticle()}>
+                                <p>Remove <FontAwesomeIcon icon={faTrash} /></p>
+                            </div>
+                        </div>
+                       </div>
             }
 
         } else {

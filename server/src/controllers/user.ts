@@ -9,7 +9,7 @@ export const addArticle = async(req: Request, res: Response): Promise<Response<a
     try {
 
         // Check if article is already saved
-        const articleSaved = await ArticleModel.findOne({ url: article.url });
+        const articleSaved = await ArticleModel.findOne({ userId: article.userId, url: article.url });
         if (articleSaved) {
             return res.json({ error: "Duplicate document", msg: "Article already saved" });
         }

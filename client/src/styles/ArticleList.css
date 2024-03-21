@@ -13,7 +13,7 @@
     border-radius: 5px;
     position: relative;
     min-width: 800px;
-    margin: 0px 20px 20px 20px;
+    margin: 0px 20px 15px 20px;
 }
 
 .article img {
@@ -41,10 +41,40 @@
 .article #read-more:hover {
     background-color: rgb(84, 192, 156);
 }
-.article svg {
+.article .article-icon {
     position: absolute;
     top: 10px;
     right: 10px;
-    color: rgb(84, 192, 156);
     cursor: pointer;
+    display: inline-block;
+    text-align: right;
 }
+
+.article #icon-plus {
+    color: rgb(84, 192, 156);
+}
+.article #icon-ellipses {
+    color: rgb(180, 180, 180);
+}
+
+.article-drop-down {
+    display: none;
+    background-color: rgb(136, 140, 160);
+    border: 1px solid rgb(145, 145, 145);
+}
+
+.article-drop-down div {
+    margin: 0px auto;
+    padding: 3px;
+}
+
+.article-icon .remove-article {
+    background-color: rgb(255, 103, 136);
+    color: white;
+}
+
+.article-icon:hover .article-drop-down {
+    display: block;
+}
+
+
