@@ -23,7 +23,7 @@ export const fetchNews = async (req: Request, res: Response): Promise<Response<a
         if (userId != "null") {
             
             for (const elem of articles) {
-                let isSaved = await ArticleModel.findOne({ userId, title: elem.title });
+                let isSaved = await ArticleModel.findOne({ userId, url: elem.url });
                 if (isSaved) {
                     elem.isSaved = true;
                 }
