@@ -1,9 +1,13 @@
 import "../styles/UserControls.css";
 import { useState, useEffect } from "react";
 import { ArticleList } from "../components/ArticleList";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass, faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 export const UserHome = () => {
+
+    // TODO: Implement search feature
 
     // Article object alias
     type Article = {
@@ -19,6 +23,7 @@ export const UserHome = () => {
     }
 
     const [articles, setArticles] = useState<Article[]>([]);
+    const [fullList, setFullList] = useState<Article[]>([]);
 
     function fetchArticles(): void {
 
@@ -29,6 +34,8 @@ export const UserHome = () => {
                 return alert(res.data.msg);
             }
 
+            setFullList(res.data.articles);
+
             return setArticles(res.data.articles);
 
         })
@@ -38,9 +45,21 @@ export const UserHome = () => {
 
     }
 
-    function deleteArticle(index: number): void {
+    function searchArticles(searchKey: string) {
+        
+        const searchLower = searchKey.toLowerCase()
 
-        console.log(window.location.pathname);
+        setArticles(fullList.filter(elem => {
+            return elem.description.toLowerCase().includes(searchLower) || elem.title.toLowerCase().includes(searchLower);
+        }));
+
+    }
+
+    function refreshArticleList() {
+        setArticles(fullList);
+    }
+
+    function deleteArticle(index: number): void {
 
         let queryStr;
         articles[index]._id ? queryStr = `_id=${ articles[index]._id }` : queryStr = `url=${ articles[index].url }`;
@@ -73,20 +92,55 @@ export const UserHome = () => {
 
     return (
         <div className="user-home">
-            <UserControls />
+            <UserControls search={searchArticles} refresh={refreshArticleList} />
             <ArticleList articles={articles} deleteArticle={deleteArticle} />
         </div>
     );
 }
 
 
-const UserControls = () => {
+const UserControls = (props: { search: (searchKey: string) => void, refresh: () => void }) => {
+
+    const [searchKey, setSearchKey] = useState<string>("");
+    const { search, refresh } = props;
+
+    function handleInputTextChange(event: React.ChangeEvent<HTMLInputElement>): void {
+
+        let searchValue = event.target.value;
+
+        // If the search bar is empty, refresh the article list
+        setSearchKey(searchValue);
+        if (searchValue.length == 0) {
+            refresh();
+        }
+    }
+
+    function handleRefreshClick() {
+        setSearchKey("");
+        refresh();
+    }
+
+    function handleKeyboardInput(event: React.KeyboardEvent<HTMLInputElement>): void {
+
+        if (searchKey != "" && event.key === "Enter") {
+            search(searchKey);
+        }
+
+    }
     
     return (
-        <div className="user-search">
-            <label htmlFor="search">Search Your Articles</label>
-            <input type="text" />
-            <button>Search</button>
+        <div className="user-controls">
+            <div className="search-bar">
+                <input type="text" value={searchKey} 
+                    onKeyDown={(event) => handleKeyboardInput(event)}
+                    onChange={(event) => handleInputTextChange(event) } 
+                    placeholder="Search your articles..."
+                />
+                <button onClick={() => search(searchKey)}>
+                    <FontAwesomeIcon icon={faMagnifyingGlass} />
+                </button>
+            </div>
+            <button id="button-refresh" onClick={() => handleRefreshClick()}><FontAwesomeIcon icon={faRotateRight} /></button>
         </div>
     );
 }

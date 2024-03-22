@@ -51,7 +51,6 @@ export const getUserArticles = async (req: Request, res: Response): Promise<Resp
 // DELETE: Delete article
 export const deleteArticle = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
 
-    // TODO: Implement function
     const { _id, url } = req.query;
 
     try {

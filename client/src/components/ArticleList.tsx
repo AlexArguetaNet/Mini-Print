@@ -44,6 +44,7 @@ const Article = (props: {
     // Check if the article is saved in the user's list. Then render the correct controls
     function renderArticleButton(): JSX.Element {
 
+        // Check if user is logged in
         if (cookies.access_token) {
 
             if (!article.isSaved && !article.userId) {

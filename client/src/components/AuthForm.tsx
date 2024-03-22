@@ -103,8 +103,10 @@ const Login = (props: { switchForm: () => void, close: () => void }) => {
             window.localStorage.setItem("userId", res.data.userId);
             setCookies("access_token", res.data.token);
             props.close();
-            window.location.reload();
 
+            // Reload the page
+            window.location.reload();
+            
         })
         .catch(err => {
             alert("Error");

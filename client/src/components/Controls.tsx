@@ -14,7 +14,9 @@ export const Controls = (props: { fetchNews: (searchBy: string, query: string) =
             return alert("Please select a category");
         }
 
+        // Clear search bar
         setSearchQuery("");
+
         fetchNews("category", category)
     }
 
@@ -25,8 +27,19 @@ export const Controls = (props: { fetchNews: (searchBy: string, query: string) =
             return alert("Please enter a search key or choose a category");
         }
 
+        // Reset category selector
         setCategory("null");
+
         fetchNews("searchKey", searchQuery);
+    }
+
+    function handleKeyboardInput(event: React.KeyboardEvent<HTMLInputElement>) {
+
+        if (searchQuery != "" && event.key === "Enter") {
+            setCategory("null");
+            fetchNews("searchKey", searchQuery);
+        }
+
     }
 
     return (
@@ -49,6 +62,7 @@ export const Controls = (props: { fetchNews: (searchBy: string, query: string) =
                 <label htmlFor="searchKey">Search</label>
                 <input type="text" name="searchKey" 
                     onChange={(event) => setSearchQuery(event.target.value)} 
+                    onKeyDown={(event) => handleKeyboardInput(event)}
                     value={searchQuery} 
                     placeholder="Search for news..."
                 />
