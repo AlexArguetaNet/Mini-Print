@@ -2,44 +2,20 @@ import "../styles/ArticleList.css";
 import { useCookies } from "react-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus, faEllipsis, faTrash } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export const ArticleList = (props: { articles: any[] }) => {
+export const ArticleList = (props: { 
+    articles: any[], 
+    saveArticle?: (index: number) => void, 
+    deleteArticle: (index: number) => void 
+}) => {
 
     const { articles } = props;
-
-    function selectArticle(index: number): void {
-
-        let newArticle = {
-            author: articles[index].author || " ",
-            title: articles[index].title,
-            description: articles[index].description,
-            urlToImage: articles[index].urlToImage,
-            url: articles[index].url,
-            userId: window.localStorage.getItem("userId"),
-            isSaved: true
-        }
-
-
-        axios.post("http://localhost:4002/add-article", { article: newArticle })
-        .then(res => {
-
-            if (res.data.error) {
-                return alert(res.data.msg);
-            }
-
-        })
-        .catch(err => {
-            return alert(err);
-        })
-
-    }
 
     return (
         <div className="article-list">
             { articles.map((elem, index) => {
-                return <Article key={index} article={elem} index={index} selectArticle={selectArticle}/>
+                return <Article key={index} article={elem} index={index} saveArticle={props.saveArticle} deleteArticle={props.deleteArticle} />
             }) }
         </div>
     );
@@ -48,63 +24,39 @@ export const ArticleList = (props: { articles: any[] }) => {
 
 const Article = (props: { 
     article: any, index: number, 
-    selectArticle: (index: number) => void 
+    saveArticle?: (index: number) => void,
+    deleteArticle: (index: number) => void
 }) => {
 
-    const { article, index, selectArticle } = props;
-    const [isSaved, setIsSaved] = useState(false);
-    const [isDeleted, setIsDeleted] = useState(false);
+    const { article, index, saveArticle, deleteArticle } = props;
     const [cookies] = useCookies(["access_token"]);
+    const [isDeleted, setIsDeleted] = useState(false);
 
-    // Handle UI and call function to add article to the user's list
-    function handleAddArticle() {
-        setIsSaved(true);
-        selectArticle(index);
+
+    function handleDelete() {
+
+        // Remove article from the UI
+        if (window.location.pathname != "/") setIsDeleted(true);
+
+        deleteArticle(index);
     }
-
-    // Edit the article settings
-    function handleDeleteArticle() {
-
-        setIsSaved(false);
-
-        // Will delete the article from the UI if the user is on their home page
-        if (window.location.pathname != "/") {
-            setIsDeleted(true);
-        }
-
-        let queryStr;
-        article._id ? queryStr = `_id=${ article._id }` : queryStr = `url=${ article.url }`;
-        
-        axios.delete(`http://localhost:4002/delete/?${ queryStr }`)
-        .then(res => {
-
-            if (res.data.error) return alert(res.data.msg);
-
-        })
-        .catch(err => {
-            console.log(err);
-            return alert(err);
-        })
-
-    }
-
 
     // Check if the article is saved in the user's list. Then render the correct controls
     function renderArticleButton(): JSX.Element {
 
         if (cookies.access_token) {
 
-            if (!isSaved) {
+            if (!article.isSaved && !article.userId) {
 
                 return <div className="article-icon">
-                        <FontAwesomeIcon id="icon-plus" icon={faCirclePlus} onClick={() => handleAddArticle()}/>
+                        <FontAwesomeIcon id="icon-plus" icon={faCirclePlus} onClick={() => { saveArticle != undefined && saveArticle(index)} }/>
                        </div>
             } else {
 
                 return <div className="article-icon">
                         <FontAwesomeIcon id="icon-ellipses" icon={faEllipsis} />
                         <div className="article-drop-down">
-                            <div className="remove-article" onClick={() => handleDeleteArticle()}>
+                            <div className="remove-article" onClick={() => handleDelete()}>
                                 <p>Remove <FontAwesomeIcon icon={faTrash} /></p>
                             </div>
                         </div>
@@ -117,19 +69,10 @@ const Article = (props: {
 
     }
 
-    // Determines the article control options
-    useEffect(() => {
-        if (!article.isSaved && !article.userId) {
-            setIsSaved(false);
-        } else {
-            setIsSaved(true);
-        }
-    },[]);
-
     return (
         <>
-            { ( !isDeleted ) && (
-                <div className="article">
+            {!isDeleted && 
+            <div className="article">
                 <img src={article.urlToImage} alt="image" />
                 <div>
                     <h4>{ article.title }</h4>
@@ -138,7 +81,7 @@ const Article = (props: {
                     {renderArticleButton()}
                 </div>
             </div>
-            )}
+            }
         </>
     );
 

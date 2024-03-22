@@ -5,7 +5,20 @@ import axios from "axios";
 
 export const UserHome = () => {
 
-    const [articles, setArticles] = useState([]);
+    // Article object alias
+    type Article = {
+        _id?: string,
+        author: string,
+        title: string,
+        description: string,
+        urlToImage: string,
+        url: string,
+        userId?: string,
+        isSaved?: boolean
+        isDeleted?: boolean
+    }
+
+    const [articles, setArticles] = useState<Article[]>([]);
 
     function fetchArticles(): void {
 
@@ -25,6 +38,35 @@ export const UserHome = () => {
 
     }
 
+    function deleteArticle(index: number): void {
+
+        console.log(window.location.pathname);
+
+        let queryStr;
+        articles[index]._id ? queryStr = `_id=${ articles[index]._id }` : queryStr = `url=${ articles[index].url }`;
+
+        axios.delete(`http://localhost:4002/delete/?${ queryStr }`)
+        .then(res => {
+
+            if (res.data.error) return alert(res.data.msg);
+
+            // Update array in the UI
+            setArticles((oldList) => {
+                oldList[index].isSaved = false;
+                return [...oldList];
+            });
+
+        })
+        .catch(err => {
+            console.log(err);
+            return alert(err);
+        })
+
+    }
+
+
+
+
     useEffect(() => {
         fetchArticles();
     }, []);
@@ -32,7 +74,7 @@ export const UserHome = () => {
     return (
         <div className="user-home">
             <UserControls />
-            <ArticleList articles={articles} />
+            <ArticleList articles={articles} deleteArticle={deleteArticle} />
         </div>
     );
 }
