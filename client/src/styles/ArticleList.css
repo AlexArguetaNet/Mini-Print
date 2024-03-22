@@ -9,8 +9,8 @@
     display: flex;
     flex-wrap: nowrap;
     background-color: white;
-    padding: 30px;
-    border-radius: 5px;
+    padding: 20px 30px;
+    border-radius: 1px;
     position: relative;
     min-width: 800px;
     margin: 0px 20px 15px 20px;
@@ -30,9 +30,8 @@
 }
 
 .article #read-more {
-    position: absolute;
-    right: 15px;
-    top: 160px;
+    margin-top: 30px;
+    float: right;
     border: none;
     padding: 4px;
     background-color: rgb(78, 78, 78);
@@ -77,4 +76,13 @@
     display: block;
 }
 
+.button-scroll-top {
+    z-index: 10;
+    position: sticky;
+    top: 90%;
+}
 
+.button-scroll-top svg {
+    width: 30px;
+    height: 30px;
+}

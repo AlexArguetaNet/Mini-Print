@@ -1,8 +1,10 @@
 import "../styles/ArticleList.css";
 import { useCookies } from "react-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlus, faEllipsis, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCirclePlus, faEllipsis, faTrash, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { Tooltip, IconButton } from "@mui/material";
+
 
 export const ArticleList = (props: { 
     articles: any[], 
@@ -11,9 +13,39 @@ export const ArticleList = (props: {
 }) => {
 
     const { articles } = props;
+    const [visible, setVisible] = useState(false);
+
+    const toggleVisible = () => { 
+        const scrolled = document.documentElement.scrollTop; 
+        if (scrolled > 800){ 
+            setVisible(true) 
+        }  
+        else if (scrolled <= 300){ 
+            setVisible(false) 
+        } 
+        }; 
+      
+    const scrollToTop = () =>{ 
+        window.scrollTo({ 
+            top: 0,  
+            behavior: 'smooth'
+            
+        }); 
+    }; 
+      
+    window.addEventListener('scroll', toggleVisible);
+
 
     return (
         <div className="article-list">
+            <div className="button-scroll-top">
+                <Tooltip className="mToolTip" title={"Back to Top"} 
+                >
+                    <IconButton>
+                        <FontAwesomeIcon icon={faArrowUp} onClick={scrollToTop} style={{ display: visible ? "inline" : "none" }}/>
+                    </IconButton>
+                </Tooltip>
+            </div>
             { articles.map((elem, index) => {
                 return <Article key={index} article={elem} index={index} saveArticle={props.saveArticle} deleteArticle={props.deleteArticle} />
             }) }
