@@ -24,7 +24,7 @@ export const Navbar = (props: { openAuthForm: () => void}) => {
                     { cookies.access_token != "" && cookies.access_token != undefined ? 
                         <>
                             <Link to="/">Home</Link>
-                            <Link to={`/user/${ window.localStorage.getItem("userId")}`}>My News</Link>
+                            <Link to={`/user/${ window.localStorage.getItem("userId")}`}>Saved</Link>
                             <button id="button-logout" onClick={() => logout()}>Logout</button>
                         </> 
                         :
