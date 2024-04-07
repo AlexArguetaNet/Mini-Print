@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { ArticleList } from "../components/ArticleList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faRotateRight } from "@fortawesome/free-solid-svg-icons";
+import { Tooltip, IconButton } from "@mui/material";
+import GridViewIcon from '@mui/icons-material/GridView';
 import axios from "axios";
 
 export const UserHome = () => {
@@ -141,6 +143,11 @@ const UserControls = (props: { search: (searchKey: string) => void, refresh: () 
                 </button>
             </div>
             <button id="button-refresh" onClick={() => handleRefreshClick()}><FontAwesomeIcon icon={faRotateRight} /></button>
+            <Tooltip title="Create Collection" placement="bottom">
+                <IconButton style={{ maxWidth: "25px", maxHeight: "25px", borderRadius: "5px" }}>
+                    <GridViewIcon style={{ maxWidth: "15px", maxHeight: "15px" }} />
+                </IconButton>
+            </Tooltip>
         </div>
     );
 }

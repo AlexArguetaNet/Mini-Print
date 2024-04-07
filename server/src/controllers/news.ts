@@ -30,7 +30,7 @@ export const fetchNews = async (req: Request, res: Response): Promise<Response<a
             }
             
         }
-        
+    
         return res.json({ articles });
 
     } catch(err) {
