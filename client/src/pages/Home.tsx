@@ -36,13 +36,8 @@ export const Home = () => {
                 return alert(res.data.msg);
             }
 
-            // Filter articles that only come with an image
-            const articlesWithImage = res.data.articles.filter((elem: { urlToImage: any; }) => elem.urlToImage);
-
-            setArticles(articlesWithImage);
-
+            setArticles(res.data.articles);
             setIsLoading(false);
-
 
         })
         .catch(err => {
