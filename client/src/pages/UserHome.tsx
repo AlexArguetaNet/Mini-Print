@@ -6,10 +6,9 @@ import { faMagnifyingGlass, faRotateRight } from "@fortawesome/free-solid-svg-ic
 import { Tooltip, IconButton } from "@mui/material";
 import GridViewIcon from '@mui/icons-material/GridView';
 import axios from "axios";
+import { CollectionModal } from "../components/CollectionModal";
 
 export const UserHome = () => {
-
-    // TODO: Implement search feature
 
     // Article object alias
     type Article = {
@@ -94,6 +93,7 @@ export const UserHome = () => {
 
     return (
         <div className="user-home">
+            <CollectionModal />
             <UserControls search={searchArticles} refresh={refreshArticleList} />
             <ArticleList articles={articles} deleteArticle={deleteArticle} />
         </div>
@@ -129,6 +129,11 @@ const UserControls = (props: { search: (searchKey: string) => void, refresh: () 
         }
 
     }
+
+    function openCollectionModal() {
+        let modalElem = window.document.getElementById("collectionModal");
+        modalElem!!.style.display = "flex";
+    }
     
     return (
         <div className="user-controls">
@@ -144,7 +149,7 @@ const UserControls = (props: { search: (searchKey: string) => void, refresh: () 
             </div>
             <button id="button-refresh" onClick={() => handleRefreshClick()}><FontAwesomeIcon icon={faRotateRight} /></button>
             <Tooltip title="Create Collection" placement="bottom">
-                <IconButton style={{ maxWidth: "25px", maxHeight: "25px", borderRadius: "5px" }}>
+                <IconButton onClick={openCollectionModal} style={{ maxWidth: "25px", maxHeight: "25px", borderRadius: "5px" }}>
                     <GridViewIcon style={{ maxWidth: "15px", maxHeight: "15px" }} />
                 </IconButton>
             </Tooltip>

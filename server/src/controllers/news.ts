@@ -28,11 +28,11 @@ export const fetchNews = async (req: Request, res: Response): Promise<Response<a
                     elem.isSaved = true;
                 }
             }
-            
         }
 
         let articlesWithImage = articles.filter((elem: { urlToImage: any, description: any }) => 
             elem.urlToImage && elem.description);
+
         return res.json({ articles: articlesWithImage });
 
     } catch(err) {
