@@ -12,7 +12,7 @@ export const CollectionModal = () => {
     }
 
     return (
-        <div className="collectionModal" id="collectionModal" onClick={(event) => close(event)}>
+        <div className="modal" id="modal" onClick={(event) => close(event)}>
             <div className="container">
             
             </div>
@@ -20,7 +20,16 @@ export const CollectionModal = () => {
     );
 }
 
-const Form = () => {
+const Collections = () => {
+
+    return (
+        <div className="collections">
+
+        </div>
+    );
+}
+
+const NewCollectionForm = () => {
 
     return (
         <div className="form">

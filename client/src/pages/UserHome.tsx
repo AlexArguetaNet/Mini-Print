@@ -131,7 +131,7 @@ const UserControls = (props: { search: (searchKey: string) => void, refresh: () 
     }
 
     function openCollectionModal() {
-        let modalElem = window.document.getElementById("collectionModal");
+        let modalElem = window.document.getElementById("modal");
         modalElem!!.style.display = "flex";
     }
     
@@ -147,7 +147,9 @@ const UserControls = (props: { search: (searchKey: string) => void, refresh: () 
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button>
             </div>
-            <button id="button-refresh" onClick={() => handleRefreshClick()}><FontAwesomeIcon icon={faRotateRight} /></button>
+            <Tooltip title="Refresh" placement="bottom">
+                <button id="button-refresh" onClick={() => handleRefreshClick()}><FontAwesomeIcon icon={faRotateRight} /></button>
+            </Tooltip>
             <Tooltip title="Create Collection" placement="bottom">
                 <IconButton onClick={openCollectionModal} style={{ maxWidth: "25px", maxHeight: "25px", borderRadius: "5px" }}>
                     <GridViewIcon style={{ maxWidth: "15px", maxHeight: "15px" }} />

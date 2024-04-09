@@ -89,6 +89,9 @@ const Article = (props: {
                 return <div className="article-icon">
                         <FontAwesomeIcon id="icon-ellipses" icon={faEllipsis} />
                         <div className="article-drop-down">
+                            <div className="add-to-collection">
+                                <p>+Collection</p>
+                            </div>
                             <div className="remove-article" onClick={() => handleDelete()}>
                                 <p>Remove <FontAwesomeIcon icon={faTrash} /></p>
                             </div>
